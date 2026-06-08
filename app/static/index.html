@@ -4,31 +4,39 @@
     <title>Password Analyzer</title>
 </head>
 <body>
-    <h2>비밀번호 보안 분석기</h2>
+    <h2>Password Security Analyzer</h2>
 
-    <input id="pw" type="text" placeholder="비밀번호 입력">
-    <button onclick="requestAnalysis('/analyze')">규칙 기반 분석</button>
-    <button onclick="requestAnalysis('/predict')">ML 예측</button>
+    <input id="pw" type="text" placeholder="Enter a password">
+    <button onclick="requestAnalysis('/analyze')">Rule Check</button>
+    <button onclick="requestAnalysis('/predict')">ML Prediction</button>
 
-    <h3>결과</h3>
+    <h3>Result</h3>
     <pre id="result"></pre>
 
     <script>
         async function requestAnalysis(path) {
             const pw = document.getElementById("pw").value;
+            const result = document.getElementById("result");
 
-            const res = await fetch(path, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ password: pw })
-            });
+            try {
+                const res = await fetch(path, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ password: pw })
+                });
 
-            const data = await res.json();
-
-            document.getElementById("result").innerText =
-                JSON.stringify(data, null, 2);
+                const text = await res.text();
+                try {
+                    const data = JSON.parse(text);
+                    result.innerText = JSON.stringify(data, null, 2);
+                } catch {
+                    result.innerText = text;
+                }
+            } catch (error) {
+                result.innerText = "Request failed: " + error;
+            }
         }
     </script>
 </body>

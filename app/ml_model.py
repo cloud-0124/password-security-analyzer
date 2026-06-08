@@ -45,12 +45,15 @@ class PasswordStrengthModel:
                 "message": self.load_error or "Model is not loaded.",
             }
 
-        prediction = self.model.predict([features])[0]
+        prediction = str(self.model.predict([features])[0])
         confidence = None
 
         if hasattr(self.model, "predict_proba"):
-            probabilities = self.model.predict_proba([features])[0]
-            confidence = float(max(probabilities))
+            try:
+                probabilities = self.model.predict_proba([features])[0]
+                confidence = float(max(probabilities))
+            except Exception:
+                confidence = None
 
         return {
             "available": True,

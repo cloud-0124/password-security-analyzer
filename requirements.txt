@@ -1,7 +1,8 @@
-fastapi
-uvicorn
-httpx
-pytest
-scikit-learn
-mlflow
-joblib
+fastapi==0.135.3
+uvicorn[standard]==0.44.0
+pydantic==2.12.4
+pytest==8.4.2
+httpx==0.28.1
+scikit-learn==1.8.0
+mlflow==3.10.1
+joblib==1.5.2
