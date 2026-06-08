@@ -3,6 +3,7 @@ __pycache__/
 .git
 tests/
 report_assets/
+final_report/
 mlruns/
 mlflow.db
 .pytest_cache/
