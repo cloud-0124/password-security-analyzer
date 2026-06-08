@@ -28,3 +28,35 @@ def test_predict_endpoint_returns_model_state():
     assert "available" in data
     assert "features" in data
     assert data["features"]["length"] == 8
+
+def test_health_endpoint_returns_operational_state():
+    response = client.get("/health")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "ok"
+    assert "model_available" in data
+    assert "feedback" in data
+
+def test_model_status_endpoint_returns_model_path():
+    response = client.get("/model/status")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "available" in data
+    assert data["model_path"].endswith("password_strength_model.joblib")
+
+def test_feedback_endpoint_saves_user_feedback():
+    response = client.post(
+        "/feedback",
+        json={
+            "password": "Abc123!@",
+            "is_correct": True,
+            "comment": "prediction looked reasonable",
+        },
+    )
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["saved"] is True
+    assert data["feedback"]["password_length"] == 8

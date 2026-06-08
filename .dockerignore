@@ -6,3 +6,4 @@ report_assets/
 mlruns/
 mlflow.db
 .pytest_cache/
+logs/
