@@ -1,5 +1,5 @@
 import csv
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -23,7 +23,7 @@ def save_feedback(
 ) -> dict[str, str | int | bool | None]:
     FEEDBACK_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
     row = {
-        "created_at": datetime.now(UTC).isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat(),
         "password_length": len(password),
         "rule_level": rule_level,
         "ml_prediction": ml_prediction,
