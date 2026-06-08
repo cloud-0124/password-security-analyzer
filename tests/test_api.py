@@ -54,6 +54,15 @@ def test_model_reload_endpoint_returns_model_state():
     assert "available" in data
     assert data["model_path"].endswith("password_strength_model.joblib")
 
+def test_model_metadata_endpoint_returns_training_metadata():
+    response = client.get("/model/metadata")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["available"] is True
+    assert data["metadata"]["experiment_name"] == "password-security-analyzer"
+    assert data["metadata"]["accuracy"] >= 0
+
 def test_feedback_endpoint_saves_user_feedback():
     response = client.post(
         "/feedback",

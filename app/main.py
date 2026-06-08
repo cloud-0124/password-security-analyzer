@@ -43,6 +43,10 @@ def model_status():
         "message": model_service.load_error or "Model is loaded.",
     }
 
+@app.get("/model/metadata")
+def model_metadata():
+    return model_service.metadata()
+
 @app.post("/model/reload")
 def model_reload():
     model_service.load()
