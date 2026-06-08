@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 .git
 tests/
+report_assets/
+mlruns/
+mlflow.db
+.pytest_cache/

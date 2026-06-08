@@ -7,23 +7,37 @@ on:
   pull_request:
 
 jobs:
-  test:
+  test-train-build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 코드 가져오기
+      - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Python 설정
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: pip
 
-      - name: 의존성 설치
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 테스트 실행
+      - name: Run tests
         run: pytest
+
+      - name: Train model and record MLflow run
+        run: python scripts/train_model.py
+
+      - name: Upload trained model artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: password-strength-model
+          path: |
+            models/password_strength_model.joblib
+            models/password_strength_model.metadata.json
+
+      - name: Build Docker image
+        run: docker build -t password-security-analyzer:ci .
