@@ -206,6 +206,10 @@ tempCodeRunnerFile.py
 # Local report screenshots and generated report materials
 report_assets/
 
+# Local MLflow tracking store
+mlruns/
+mlflow.db
+
 # Ruff stuff:
 .ruff_cache/
 
