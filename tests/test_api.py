@@ -20,3 +20,11 @@ def test_analyze_medium_password():
     assert response.status_code == 200
     data = response.json()
     assert data["level"] == "medium"
+
+def test_predict_endpoint_returns_model_state():
+    response = client.post("/predict", json={"password": "Abc123!@"})
+    assert response.status_code == 200
+    data = response.json()
+    assert "available" in data
+    assert "features" in data
+    assert data["features"]["length"] == 8
