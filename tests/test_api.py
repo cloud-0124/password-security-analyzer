@@ -46,6 +46,14 @@ def test_model_status_endpoint_returns_model_path():
     assert "available" in data
     assert data["model_path"].endswith("password_strength_model.joblib")
 
+def test_model_reload_endpoint_returns_model_state():
+    response = client.post("/model/reload")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "available" in data
+    assert data["model_path"].endswith("password_strength_model.joblib")
+
 def test_feedback_endpoint_saves_user_feedback():
     response = client.post(
         "/feedback",

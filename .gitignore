@@ -213,6 +213,9 @@ mlflow.db
 # Local runtime logs
 logs/
 
+# Local model operation backups
+models/backups/
+
 # Ruff stuff:
 .ruff_cache/
 

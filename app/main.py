@@ -43,6 +43,11 @@ def model_status():
         "message": model_service.load_error or "Model is loaded.",
     }
 
+@app.post("/model/reload")
+def model_reload():
+    model_service.load()
+    return model_status()
+
 @app.post("/feedback")
 def feedback(req: FeedbackRequest):
     rule_result = analyze_password(req.password)

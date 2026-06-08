@@ -7,3 +7,4 @@ mlruns/
 mlflow.db
 .pytest_cache/
 logs/
+models/backups/
